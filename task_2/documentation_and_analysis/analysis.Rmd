@@ -29,8 +29,8 @@ cakes %>%
 
 ```{r}
 cakes %>% 
-  filter(cake == "sponge") %>% 
-  summarise()
+  filter(cake == "sponge" & measure  == "cup") %>%
+  summarise(total_cups = sum(as.numeric(amount)))
 ```
 
 # 3. How many ingredients are measured in teaspoons?
