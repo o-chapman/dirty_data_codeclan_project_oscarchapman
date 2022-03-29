@@ -1,0 +1,73 @@
+---
+title: "task_2 - Analysis"
+output: html_document
+date: '2022-03-28'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Reading in Data and Libraries
+
+```{r, results FALSE}
+library(tidyverse)
+library(here)
+
+cakes <- read_csv(here("task_2/clean_data/cake_clean.csv"))
+```
+
+# 1. Which cake has the most cocoa in it?
+
+```{r}
+cakes %>%
+  filter(ingredient == "cocoa") %>% 
+  slice_max(amount)
+```
+
+# 2. For sponge cake, how many cups of ingredients are used in total?
+
+```{r}
+cakes %>% 
+  filter(cake == "sponge") %>% 
+  summarise()
+```
+
+# 3. How many ingredients are measured in teaspoons?
+
+```{r}
+cakes %>% 
+  distinct(ingredient, measure) %>% 
+  filter(measure == "teaspoon") %>% 
+  nrow()
+```
+
+# 4. Which cake has the most unique ingredients?
+
+I have defined the most unique cake to be the one with the most unique ingredients
+(a unique ingredient being one only used in one cake)
+
+```{r}
+cakes %>% 
+  mutate(amount = na_if(amount, 0)) %>% 
+  drop_na(amount) %>% 
+  group_by(ingredient) %>% 
+  mutate(ingredient_no = n()) %>% 
+  ungroup() %>% 
+  filter(ingredient_no == 1) %>% 
+  group_by(cake) %>% 
+  summarise(no_unique_ingredients = n()) %>% 
+  slice_max(no_unique_ingredients)
+```
+
+# 5. Which ingredients are used only once?
+
+```{r}
+cakes %>% 
+  mutate(amount = na_if(amount, 0)) %>% 
+  drop_na(amount) %>% 
+  group_by(ingredient) %>% 
+  summarise(no_occurences = n()) %>% 
+  filter(no_occurences == 1)
+```
+
