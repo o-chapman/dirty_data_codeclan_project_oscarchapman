@@ -32,7 +32,12 @@ rwa_clean <- rwa_indexed_score %>%
 ## Recoding some columns to give values more meaning
 
 rwa_test <- rwa_clean %>% 
-  mutate(gender = recode(gender, 1 = "male", 2 = "female", 3 = "other", 0 = as.character(NA)))
+  mutate(gender = as.character(gender),
+         gender = case_when(gender == 1 ~ "male",
+                            gender == 2 ~ "female",
+                            gender == 3 ~ "other",
+                            gender == 0 ~ as.character(NA)))
+    
 
 ## Writing the clean data to csv
 

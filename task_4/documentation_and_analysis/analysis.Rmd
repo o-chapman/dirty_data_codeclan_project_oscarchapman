@@ -3,7 +3,7 @@ title: "Analysis - task_4"
 output:
   html_document:
     keep_md: yes
-    df_print: paged
+    df_print: kable
 date: '2022-03-31'
 ---
 
@@ -108,7 +108,8 @@ candy_long_points %>%
          candy_name != "any_full_sized_candy_bar") %>%
   group_by(gender, candy_name) %>% 
   summarise(total_points = sum(point, na.rm = TRUE)) %>% 
-  slice_max(total_points)
+  slice_max(total_points) %>% 
+  head(3)
 ```
 For people identifying other than male or female, we have twix taking the first spot
 (after any full sized bar which I filtered out as it's too general), whereas for male

@@ -3,7 +3,7 @@ title: "Analysis - task_4"
 output:
   html_document:
     keep_md: yes
-    df_print: paged
+    df_print: kable
 date: '2022-03-31'
 ---
 
@@ -85,10 +85,12 @@ candy %>%
   summarise(avg_age = mean(age, na.rm = TRUE))
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["avg_age"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"35.0904"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+| avg_age|
+|-------:|
+| 35.0904|
+
 </div>
 
 # 3. What was the average age of people who are not going trick or treating?
@@ -100,10 +102,12 @@ candy %>%
   summarise(avg_age = mean(age, na.rm = TRUE))
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["avg_age"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"39.16249"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+|  avg_age|
+|--------:|
+| 39.16249|
+
 </div>
 
 # 4. For each of joy, despair and meh, which candy bar recieved the most of these ratings? 
@@ -118,10 +122,13 @@ candy_long %>%
   slice_max(number_of_joys, n = 2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["candy_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["number_of_joys"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"any_full_sized_candy_bar","2":"7589"},{"1":"reese_s_peanut_butter_cups","2":"7369"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+|candy_name                 | number_of_joys|
+|:--------------------------|--------------:|
+|any_full_sized_candy_bar   |           7589|
+|reese_s_peanut_butter_cups |           7369|
+
 </div>
 Seen as any full sized candy bar is too general, we can take reece's peanut butter cups
 to be the most liked candy.
@@ -136,10 +143,12 @@ candy_long %>%
   slice_max(number_of_despairs, n = 1)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["candy_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["number_of_despairs"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"gum_from_baseball_cards","2":"7341"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+|candy_name              | number_of_despairs|
+|:-----------------------|------------------:|
+|gum_from_baseball_cards |               7341|
+
 </div>
 
 
@@ -153,10 +162,12 @@ candy_long %>%
   slice_max(number_of_mehs, n = 1)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["candy_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["number_of_mehs"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"lollipops","2":"1570"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+|candy_name | number_of_mehs|
+|:----------|--------------:|
+|lollipops  |           1570|
+
 </div>
 
 # 5. How many people rated Starburst as despair?
@@ -193,7 +204,8 @@ candy_long_points %>%
          candy_name != "any_full_sized_candy_bar") %>%
   group_by(gender, candy_name) %>% 
   summarise(total_points = sum(point, na.rm = TRUE)) %>% 
-  slice_max(total_points)
+  slice_max(total_points) %>% 
+  head(3)
 ```
 
 ```
@@ -201,10 +213,14 @@ candy_long_points %>%
 ## `.groups` argument.
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["gender"],"name":[1],"type":["chr"],"align":["left"]},{"label":["candy_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["total_points"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Female","2":"reese_s_peanut_butter_cups","3":"768"},{"1":"Male","2":"reese_s_peanut_butter_cups","3":"1443"},{"1":"Other","2":"twix","3":"32"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+|gender |candy_name                 | total_points|
+|:------|:--------------------------|------------:|
+|Female |reese_s_peanut_butter_cups |          768|
+|Male   |reese_s_peanut_butter_cups |         1443|
+|Other  |twix                       |           32|
+
 </div>
 For people identifying other than male or female, we have twix taking the first spot
 (after any full sized bar which I filtered out as it's too general), whereas for male
@@ -227,10 +243,14 @@ candy_long_points %>%
 ## `.groups` argument.
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["timestamp"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["candy_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["total_points"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2015","2":"reese_s_peanut_butter_cups","3":"4375"},{"1":"2016","2":"kit_kat","3":"920"},{"1":"2017","2":"reese_s_peanut_butter_cups","3":"1403"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+| timestamp|candy_name                 | total_points|
+|---------:|:--------------------------|------------:|
+|      2015|reese_s_peanut_butter_cups |         4375|
+|      2016|kit_kat                    |          920|
+|      2017|reese_s_peanut_butter_cups |         1403|
+
 </div>
 
 # 8. What was the most popular candy bar by this rating for people in US, Canada, UK, and all other countries?
@@ -252,8 +272,15 @@ candy_long_points %>%
 ## `.groups` argument.
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["candy_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["total_points"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"canada","2":"kit_kat","3":"229"},{"1":"other","2":"reese_s_peanut_butter_cups","3":"4470"},{"1":"uk","2":"lindt_truffle","3":"32"},{"1":"uk","2":"rolos","3":"32"},{"1":"uk","2":"tolberone_something_or_other","3":"32"},{"1":"usa","2":"reese_s_peanut_butter_cups","3":"1979"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="kable-table">
+
+|country |candy_name                   | total_points|
+|:-------|:----------------------------|------------:|
+|canada  |kit_kat                      |          229|
+|other   |reese_s_peanut_butter_cups   |         4470|
+|uk      |lindt_truffle                |           32|
+|uk      |rolos                        |           32|
+|uk      |tolberone_something_or_other |           32|
+|usa     |reese_s_peanut_butter_cups   |         1979|
+
 </div>
