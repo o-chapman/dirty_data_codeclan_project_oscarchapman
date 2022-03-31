@@ -1,6 +1,9 @@
 ---
 title: "task_2 - Analysis"
-output: html_document
+output:
+  html_document:
+    keep_md: yes
+    df_print: paged
 date: '2022-03-28'
 ---
 

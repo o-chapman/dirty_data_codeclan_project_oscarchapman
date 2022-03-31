@@ -1,10 +1,6 @@
 ---
-title: "Analysis - task_4"
-output:
-  html_document:
-    keep_md: yes
-    df_print: paged
-date: '2022-03-31'
+title: "Analysis- task_4"
+output: html_notebook
 ---
 
 # Loading libraries and reading in data
@@ -137,3 +133,4 @@ candy_long_points %>%
   summarise(total_points = sum(point, na.rm = TRUE)) %>% 
   slice_max(total_points)
 ```
+
