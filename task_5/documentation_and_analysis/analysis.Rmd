@@ -3,7 +3,7 @@ title: "Analysis - task_5"
 output:
   html_document:
     keep_md: yes
-    df_print: paged
+    df_print: kable
 date: '2022-03-31'
 ---
 
@@ -21,9 +21,52 @@ rwa <- read_csv(here("task_5/clean_data/rwa_clean.csv"))
 ```
 
 # 1. What’s the average RWA score for each gender?
+
 ```{r}
 rwa %>% 
   group_by(gender) %>% 
   summarise(avg_rwa_score = mean(rwa_score))
+```
+
+# 2. What’s the average RWA score for left handed people vs. right handed people.
+
+```{r}
+rwa %>% 
+  group_by(hand) %>% 
+  summarise(avg_rwa_score = mean(rwa_score), number_of_people = n())
+```
+
+# 3. What’s the average family size for each type of childhood?
+
+```{r}
+rwa %>% 
+  group_by(urban) %>% 
+  summarise(avg_family_size = mean(familysize))
+```
+
+
+# 4. What’s the average time to take the test for each education level?
+
+```{r}
+rwa %>% 
+  group_by(education) %>% 
+  summarise(avg_test_time = mean(testelapse))
+```
+
+
+# 5. Create a plot of results of question 4.
+
+```{r}
+
+```
+
+
+# 6. What’s the average RWA score for people based on age
+
+```{r}
+rwa %>% 
+  group_by(age_cat) %>% 
+  summarise(avg_rwa_score = mean(rwa_score), number_of_people = n()) %>% 
+  arrange(avg_rwa_score)
 ```
 

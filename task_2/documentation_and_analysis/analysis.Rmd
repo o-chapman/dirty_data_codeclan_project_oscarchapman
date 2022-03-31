@@ -3,7 +3,7 @@ title: "task_2 - Analysis"
 output:
   html_document:
     keep_md: yes
-    df_print: paged
+    df_print: kable
 date: '2022-03-28'
 ---
 

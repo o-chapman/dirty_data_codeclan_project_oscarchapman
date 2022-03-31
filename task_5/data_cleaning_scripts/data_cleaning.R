@@ -31,14 +31,45 @@ rwa_clean <- rwa_indexed_score %>%
 
 ## Recoding some columns to give values more meaning
 
-rwa_test <- rwa_clean %>% 
+rwa_clean <- rwa_clean %>% 
   mutate(gender = as.character(gender),
-         gender = case_when(gender == 1 ~ "male",
-                            gender == 2 ~ "female",
-                            gender == 3 ~ "other",
-                            gender == 0 ~ as.character(NA)))
-    
+         gender = recode(gender,
+                         "1" = "male",
+                          "2" = "female",
+                          "3" = "other",
+                          "0" = as.character(NA)),
+         hand = as.character(hand),
+         hand = recode(hand,
+                       "1" = "right",
+                       "2" = "left",
+                       "3" = "both",
+                       "0" = NA_character_),
+         urban = as.character(urban),
+         urban = recode(urban,
+                       "1" = "rural",
+                       "2" = "suburban",
+                       "3" = "urban",
+                       "0" = NA_character_),
+         education = as.character(education),
+         education = recode(education,
+                        "1" = "less than high school",
+                        "2" = "high schol",
+                        "3" = "university degree",
+                        "4" = "graduate degree",
+                        "0" = NA_character_))
+
+
+## Making an age_category column
+
+rwa_clean <- rwa_clean %>% 
+  mutate(age_cat = case_when(age < 18 ~ "Under 18",
+                             age < 26 ~ "18-25",
+                             age < 41 ~ "26-40",
+                             age < 61 ~ "41-60",
+                             is.na(age) ~ NA_character_,
+                             TRUE ~ "Over 60"))
+
 
 ## Writing the clean data to csv
 
-write_csv(rwa_indexed_score_reduced, "task_5/clean_data/rwa_clean.csv")
+write_csv(rwa_clean, "task_5/clean_data/rwa_clean.csv")
