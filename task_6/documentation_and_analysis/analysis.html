@@ -10,9 +10,9 @@
 
 
 
-<meta name="date" content="2022-03-28" />
+<meta name="date" content="2022-03-31" />
 
-<title>task_1 - Analysis</title>
+<title>Analysis - task_6</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -362,14 +362,14 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">task_1 - Analysis</h1>
-<h4 class="date">2022-03-28</h4>
+<h1 class="title toc-ignore">Analysis - task_6</h1>
+<h4 class="date">2022-03-31</h4>
 
 </div>
 
 
-<div id="load-in-the-libraries-and-clean-data" class="section level1">
-<h1>Load in the libraries and clean data</h1>
+<div id="loading-libraries-and-reading-data" class="section level1">
+<h1>Loading libraries and reading data</h1>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
 <pre><code>## v ggplot2 3.3.5     v purrr   0.3.4
@@ -381,229 +381,115 @@ pre code {
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(here)</code></pre>
 <pre><code>## here() starts at D:/CodeClan/codeclan_homework/week_4/dirty_data_codeclan_project_oscarchapman</code></pre>
-<pre class="r"><code>decathlon &lt;- read_csv(here(&quot;task_1/clean_data/decathlon_clean.csv&quot;))</code></pre>
-<pre><code>## Rows: 41 Columns: 14</code></pre>
+<pre class="r"><code>dogs &lt;- read_csv(here(&quot;task_4/clean_data/dogs_clean.csv&quot;))</code></pre>
+<pre><code>## Rows: 300 Columns: 9</code></pre>
 <pre><code>## -- Column specification --------------------------------------------------------
 ## Delimiter: &quot;,&quot;
-## chr  (2): name, competition
-## dbl (12): x100m, long_jump, shot_put, high_jump, x400m, x110m_hurdle, discus...
+## chr (6): title, first_name, last_name, email, dog_size, dog_gender
+## dbl (3): id, amount_spent_on_dog_food, dog_age
 ## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="who-had-the-longest-long-jump-seen-in-the-data" class="section level1">
-<h1>1. Who had the longest long jump seen in the data?</h1>
-<pre class="r"><code>decathlon %&gt;% 
-  slice_max(long_jump)</code></pre>
-<div class="kable-table">
-<table>
-<colgroup>
-<col width="4%" />
-<col width="5%" />
-<col width="8%" />
-<col width="7%" />
-<col width="8%" />
-<col width="5%" />
-<col width="11%" />
-<col width="5%" />
-<col width="9%" />
-<col width="7%" />
-<col width="5%" />
-<col width="4%" />
-<col width="5%" />
-<col width="10%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="right">x100m</th>
-<th align="right">long_jump</th>
-<th align="right">shot_put</th>
-<th align="right">high_jump</th>
-<th align="right">x400m</th>
-<th align="right">x110m_hurdle</th>
-<th align="right">discus</th>
-<th align="right">pole_vault</th>
-<th align="right">javeline</th>
-<th align="right">x1500m</th>
-<th align="right">rank</th>
-<th align="right">points</th>
-<th align="left">competition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">clay</td>
-<td align="right">10.44</td>
-<td align="right">7.96</td>
-<td align="right">15.23</td>
-<td align="right">2.06</td>
-<td align="right">49.19</td>
-<td align="right">14.13</td>
-<td align="right">50.11</td>
-<td align="right">4.9</td>
-<td align="right">69.71</td>
-<td align="right">282</td>
-<td align="right">2</td>
-<td align="right">8820</td>
-<td align="left">OlympicG</td>
-</tr>
-</tbody>
-</table>
+<div id="the-client-only-counts-a-valid-email-address-as-one-ending-in-.com.-how-many-survey-results-have-a-valid-email-address." class="section level1">
+<h1>The client only counts a valid email address as one ending in
+‘.com’. How many survey results have a valid email address.</h1>
+<pre class="r"><code>dogs %&gt;% 
+  filter(str_detect(email, &quot;.com$&quot;)) %&gt;% 
+  nrow()</code></pre>
+<pre><code>## [1] 181</code></pre>
 </div>
-</div>
-<div id="what-was-the-average-100m-time-in-each-competition" class="section level1">
-<h1>2. What was the average 100m time in each competition?</h1>
-<pre class="r"><code>decathlon %&gt;% 
-  group_by(competition) %&gt;% 
-  summarise(avg_100m_time = mean(x100m))</code></pre>
+<div id="whats-the-average-amount-spent-on-dog-food-for-each-dog-size." class="section level1">
+<h1>What’s the average amount spent on dog food for each dog size.</h1>
+<pre class="r"><code>dogs %&gt;% 
+  filter(!is.na(dog_size)) %&gt;% 
+  group_by(dog_size) %&gt;% 
+  summarise(avg_amount = mean(amount_spent_on_dog_food, na.rm = TRUE))</code></pre>
 <div class="kable-table">
 <table>
 <thead>
 <tr class="header">
-<th align="left">competition</th>
-<th align="right">avg_100m_time</th>
+<th align="left">dog_size</th>
+<th align="right">avg_amount</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Decastar</td>
-<td align="right">11.17538</td>
+<td align="left">L</td>
+<td align="right">50.73171</td>
 </tr>
 <tr class="even">
-<td align="left">OlympicG</td>
-<td align="right">10.91571</td>
+<td align="left">M</td>
+<td align="right">46.34286</td>
 </tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="who-had-the-highest-total-points-across-both-competitions" class="section level1">
-<h1>3. Who had the highest total points across both competitions?</h1>
-<pre class="r"><code>decathlon %&gt;% 
-  group_by(name) %&gt;% 
-  summarise(total_points = sum(points)) %&gt;% 
-  slice_max(total_points)</code></pre>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="right">total_points</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td align="left">sebrle</td>
-<td align="right">17110</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="what-was-the-shot-put-scores-for-the-top-three-competitors-in-each-competition" class="section level1">
-<h1>4. What was the shot-put scores for the top three competitors in
-each competition?</h1>
-<pre class="r"><code>decathlon %&gt;%
-  group_by(competition) %&gt;% 
-  slice_max(shot_put, n = 3) %&gt;% 
-  select(competition, name, shot_put)</code></pre>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="left">competition</th>
-<th align="left">name</th>
-<th align="right">shot_put</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Decastar</td>
-<td align="left">yurkov</td>
-<td align="right">15.19</td>
+<td align="left">S</td>
+<td align="right">50.06383</td>
 </tr>
 <tr class="even">
-<td align="left">Decastar</td>
-<td align="left">sebrle</td>
-<td align="right">14.83</td>
+<td align="left">XL</td>
+<td align="right">50.66935</td>
 </tr>
 <tr class="odd">
-<td align="left">Decastar</td>
-<td align="left">karpov</td>
-<td align="right">14.77</td>
-</tr>
-<tr class="even">
-<td align="left">OlympicG</td>
-<td align="left">sebrle</td>
-<td align="right">16.36</td>
-</tr>
-<tr class="odd">
-<td align="left">OlympicG</td>
-<td align="left">karpov</td>
-<td align="right">15.93</td>
-</tr>
-<tr class="even">
-<td align="left">OlympicG</td>
-<td align="left">macey</td>
-<td align="right">15.73</td>
+<td align="left">XS</td>
+<td align="right">56.92593</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="what-was-the-average-points-for-competitors-who-ran-the-400m-in-less-than-50-seconds-vs.-those-than-ran-400m-in-more-than-50-seconds" class="section level1">
-<h1>5. What was the average points for competitors who ran the 400m in
-less than 50 seconds vs. those than ran 400m in more than 50
-seconds?</h1>
-<div id="we-have-some-competitors-who-have-run-both-under-50s-and-over-50s-but-we-can-just-include-them-in-both-under-50s-and-over" class="section level2">
-<h2>We have some competitors who have run both under 50s and over 50s
-but we can just include them in both under 50s and over</h2>
-</div>
-<div id="less-than-50s" class="section level2">
-<h2>Less than 50s</h2>
-<pre class="r"><code>decathlon %&gt;% 
-  filter(x400m &lt; 50) %&gt;% 
-  group_by(name) %&gt;% 
-  summarise(competitor_points = mean(points)) %&gt;% 
-  summarise(overall_point_avg = mean(competitor_points))</code></pre>
+<div id="for-owners-whose-surname-starts-with-a-letter-in-the-second-half-of-the-alphabet-n-onwards-what-is-the-average-age-of-their-dog" class="section level1">
+<h1>For owners whose surname starts with a letter in the second half of
+the alphabet (N onwards) what is the average age of their dog?</h1>
+<pre class="r"><code>dogs %&gt;% 
+  filter(str_detect(last_name, &quot;^[N-Z]&quot;)) %&gt;% 
+  summarise(avg_age = mean(dog_age, na.rm = TRUE))</code></pre>
 <div class="kable-table">
 <table>
 <thead>
 <tr class="header">
-<th align="right">overall_point_avg</th>
+<th align="right">avg_age</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">8083.214</td>
+<td align="right">52.94737</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="more-than-50s" class="section level2">
-<h2>More than 50s</h2>
-<pre class="r"><code>decathlon %&gt;% 
-  filter(x400m &gt; 50) %&gt;% 
-  group_by(name) %&gt;% 
-  summarise(competitor_points = mean(points)) %&gt;% 
-  summarise(overall_point_avg = mean(competitor_points))</code></pre>
+<div id="the-dog_age-column-is-the-age-in-dog-years.-if-the-conversion-is-1-human-year-6-dog-years-then-what-is-the-average-human-age-for-dogs-of-each-gender" class="section level1">
+<h1>The dog_age column is the age in dog years. If the conversion is 1
+human year = 6 dog years, then what is the average human age for dogs of
+each gender?</h1>
+<pre class="r"><code>dogs %&gt;% 
+  filter(!is.na(dog_gender)) %&gt;% 
+  group_by(dog_gender) %&gt;% 
+  summarise(avg_human_age = mean(dog_age, na.rm = TRUE)/6)</code></pre>
 <div class="kable-table">
 <table>
 <thead>
 <tr class="header">
-<th align="right">overall_point_avg</th>
+<th align="left">dog_gender</th>
+<th align="right">avg_human_age</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">7727.167</td>
+<td align="left">F</td>
+<td align="right">7.911836</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+<td align="right">8.392086</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<div id="create-a-plot-of-results-of-question-4." class="section level1">
+<h1>Create a plot of results of question 4.</h1>
 </div>
 
 

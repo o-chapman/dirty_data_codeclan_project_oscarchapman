@@ -396,10 +396,26 @@ pre code {
 <pre class="r"><code>cakes %&gt;%
   filter(ingredient == &quot;cocoa&quot;) %&gt;% 
   slice_max(amount)</code></pre>
-<pre><code>## # A tibble: 1 x 4
-##   cake               ingredient amount measure   
-##   &lt;chr&gt;              &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     
-## 1 one bowl chocolate cocoa          10 tablespoon</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">cake</th>
+<th align="left">ingredient</th>
+<th align="right">amount</th>
+<th align="left">measure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">one bowl chocolate</td>
+<td align="left">cocoa</td>
+<td align="right">10</td>
+<td align="left">tablespoon</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="for-sponge-cake-how-many-cups-of-ingredients-are-used-in-total" class="section level1">
 <h1>2. For sponge cake, how many cups of ingredients are used in
@@ -407,10 +423,20 @@ total?</h1>
 <pre class="r"><code>cakes %&gt;% 
   filter(cake == &quot;sponge&quot; &amp; measure  == &quot;cup&quot;) %&gt;%
   summarise(total_cups = sum(as.numeric(amount)))</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   total_cups
-##        &lt;dbl&gt;
-## 1        3.5</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">total_cups</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">3.5</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="how-many-ingredients-are-measured-in-teaspoons" class="section level1">
 <h1>3. How many ingredients are measured in teaspoons?</h1>
@@ -435,10 +461,22 @@ cake)</p>
   group_by(cake) %&gt;% 
   summarise(no_unique_ingredients = n()) %&gt;% 
   slice_max(no_unique_ingredients)</code></pre>
-<pre><code>## # A tibble: 1 x 2
-##   cake  no_unique_ingredients
-##   &lt;chr&gt;                 &lt;int&gt;
-## 1 angel                     2</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">cake</th>
+<th align="right">no_unique_ingredients</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">angel</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="which-ingredients-are-used-only-once" class="section level1">
 <h1>5. Which ingredients are used only once?</h1>
@@ -448,17 +486,50 @@ cake)</p>
   group_by(ingredient) %&gt;% 
   summarise(no_occurences = n()) %&gt;% 
   filter(no_occurences == 1)</code></pre>
-<pre><code>## # A tibble: 8 x 2
-##   ingredient      no_occurences
-##   &lt;chr&gt;                   &lt;int&gt;
-## 1 bananas                     1
-## 2 cream of tartar             1
-## 3 crushed ice                 1
-## 4 dried currants              1
-## 5 egg white                   1
-## 6 nutmeg                      1
-## 7 nuts                        1
-## 8 zwiebach                    1</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">ingredient</th>
+<th align="right">no_occurences</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bananas</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">cream of tartar</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">crushed ice</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">dried currants</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">egg white</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">nutmeg</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">nuts</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">zwiebach</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
