@@ -2,7 +2,12 @@
 
 ### *A practise project for CodeClan in cleaning and doing basic analysis on messy data*
   
+
+#### _FOR CODECLAN INSTRUCTORS:_
+*- task_2 and task_4 are the ones I'd like to submit*
   
+  
+### *File Structure:*
   
 Inside each task_** folder, the file structure is as below:
 

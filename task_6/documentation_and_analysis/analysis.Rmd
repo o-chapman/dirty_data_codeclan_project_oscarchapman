@@ -1,0 +1,61 @@
+---
+title: "Analysis - task_6"
+output:
+  html_document:
+    keep_md: yes
+    df_print: kable
+date: '2022-03-31'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Loading libraries and reading data
+
+```{r}
+library(tidyverse)
+library(here)
+
+dogs <- read_csv(here("task_4/clean_data/dogs_clean.csv"))
+```
+
+# The client only counts a valid email address as one ending in ‘.com’. How many survey results have a valid email address.
+
+```{r}
+dogs %>% 
+  filter(str_detect(email, ".com$")) %>% 
+  nrow()
+```
+
+
+# What’s the average amount spent on dog food for each dog size.
+
+```{r}
+dogs %>% 
+  filter(!is.na(dog_size)) %>% 
+  group_by(dog_size) %>% 
+  summarise(avg_amount = mean(amount_spent_on_dog_food, na.rm = TRUE))
+```
+
+
+# For owners whose surname starts with a letter in the second half of the alphabet (N onwards) what is the average age of their dog?
+
+```{r}
+dogs %>% 
+  filter(str_detect(last_name, "^[N-Z]")) %>% 
+  summarise(avg_age = mean(dog_age, na.rm = TRUE))
+```
+
+
+# The dog_age column is the age in dog years. If the conversion is 1 human year = 6 dog years, then what is the average human age for dogs of each gender?
+
+```{r}
+dogs %>% 
+  filter(!is.na(dog_gender)) %>% 
+  group_by(dog_gender) %>% 
+  summarise(avg_human_age = mean(dog_age, na.rm = TRUE)/6)
+```
+
+
+# Create a plot of results of question 4.
